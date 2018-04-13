@@ -10,9 +10,9 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
-//import { AuthGlobals } from "redux-auth/bootstrap-theme";
-import { AuthGlobals } from "redux-auth/material-ui-theme";
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { AuthGlobals } from "redux-auth/bootstrap-theme";
+//import { AuthGlobals } from "redux-auth/material-ui-theme";
+//import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import HomePage from 'containers/HomePage/Loadable';
 import FeaturePage from 'containers/FeaturePage/Loadable';
@@ -22,7 +22,6 @@ import Footer from 'components/Footer';
 
 export default function App() {
   return (
-    <MuiThemeProvider>
       <div>
         <AuthGlobals />
         <Helmet
@@ -41,6 +40,5 @@ export default function App() {
         </div>          
         <Footer />
       </div>
-    </MuiThemeProvider>
   );
 }
