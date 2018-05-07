@@ -20,10 +20,16 @@ import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 
+import LoginPage from 'containers/LoginPage/Loadable';
+
 export default function App() {
   return (
       <div>
-        <AuthGlobals />
+        <AuthGlobals
+          signOutSuccessEnabled={false}
+          emailSignInSuccessEnabled={false}
+          emailSignUpSuccessEnabled={false}
+          />
         <Helmet
           titleTemplate="%s - React.js Boilerplate"
           defaultTitle="React.js Boilerplate"
@@ -35,6 +41,9 @@ export default function App() {
           <Switch>
             <Route exact path="/" component={HomePage} />
             <Route path="/features" component={FeaturePage} />
+
+            <Route path="/login" component={LoginPage} />
+
             <Route path="" component={NotFoundPage} />
           </Switch>
         </div>          

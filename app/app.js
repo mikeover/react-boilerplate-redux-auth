@@ -71,8 +71,8 @@ export function renderApp({cookies, isServer, currentLocation, messages} = {}) {
   // configure redux-auth BEFORE rendering the page
   return store.dispatch(configure(
     // use the FULL PATH to your API
-    {apiUrl: "http://dmchatbot-api.test/api/v1"},
-    {isServer, cookies, currentLocation}
+    {apiUrl: "http://TODO-YOUR-API-ENDPOINT"},
+    {storage: 'localStorage', isServer: false, cleanSession: false, clientOnly: true}
   )).then(({redirectPath, blank} = {}) => {
     if (blank) {
       return <noscript />;
@@ -92,10 +92,6 @@ export function renderApp({cookies, isServer, currentLocation, messages} = {}) {
 
 const render = (messages) => {
   renderApp({ messages }).then(appComponent => {
-    console.log("app=", appComponent);
-    console.log("store right now", store);
-    console.log("state right now", store.getState());
-    console.log("auth right now", store.getState().get('auth'));
     ReactDOM.render(appComponent, MOUNT_NODE);
   });
 };

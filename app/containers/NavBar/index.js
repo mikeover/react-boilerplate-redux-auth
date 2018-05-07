@@ -13,13 +13,35 @@ import { compose } from 'redux';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import makeSelectNavBar from './selectors';
+import { makeSelectNavBar, makeSelectUser, makeSelectAuth } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 
+import { Link } from 'react-router-dom';
+import { SignOutButton } from "redux-auth/bootstrap-theme";
+import { configure, signOut } from 'redux-auth';
 
 export class NavBar extends React.Component { // eslint-disable-line react/prefer-stateless-function
+  renderAuthLinks() {
+    if (this.props.user.isSignedIn) {
+      return [
+        <li key='dashboard'><Link to='/dashboard'>Dashboard</Link></li>,
+        <li key='dropdown' className="dropdown">
+          <a className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span className="caret"></span></a>
+          <ul className="dropdown-menu">
+            <li><Link onClick={this.props.onSignoutClicked} to='#'>Logout</Link></li>
+          </ul>
+        </li>
+        ];
+    } else {
+      return [
+        <li key='signup'><Link to='/signup'>Sign Up</Link></li>,
+        <li key='login'><Link to='/login'>Login</Link></li>
+      ];
+    }
+  }
+
   render() {
     return (
       <div>
@@ -32,26 +54,17 @@ export class NavBar extends React.Component { // eslint-disable-line react/prefe
                 <span className="icon-bar"></span>
                 <span className="icon-bar"></span>
               </button>
-              <a className="navbar-brand" href="#">DM Chat Bot</a>
+              <Link to='/' className="navbar-brand">One Great Title</Link>
             </div>
 
             <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul className="nav navbar-nav navbar-right">
-                <li><a href="#">Link</a></li>
-                <li className="dropdown">
-                  <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span className="caret"></span></a>
-                  <ul className="dropdown-menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li role="separator" className="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                  </ul>
-                </li>
+                {this.renderAuthLinks()}
               </ul>
             </div>
           </div>
         </nav>        
+        <SignOutButton />
       </div>
     );
   }
@@ -59,15 +72,22 @@ export class NavBar extends React.Component { // eslint-disable-line react/prefe
 
 NavBar.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  user: PropTypes.object,
+  onSignoutClicked: PropTypes.func
 };
 
 const mapStateToProps = createStructuredSelector({
   navbar: makeSelectNavBar(),
+  user: makeSelectUser(),
+  auth: makeSelectAuth()
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    onSignoutClicked: (evt) => {
+      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
+      dispatch(signOut());
+    }
   };
 }
 
