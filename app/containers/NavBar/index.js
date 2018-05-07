@@ -19,7 +19,6 @@ import saga from './saga';
 import messages from './messages';
 
 import { Link } from 'react-router-dom';
-import { SignOutButton } from "redux-auth/bootstrap-theme";
 import { configure, signOut } from 'redux-auth';
 
 export class NavBar extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -64,7 +63,6 @@ export class NavBar extends React.Component { // eslint-disable-line react/prefe
             </div>
           </div>
         </nav>        
-        <SignOutButton />
       </div>
     );
   }

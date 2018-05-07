@@ -21,6 +21,7 @@ import Header from 'components/Header';
 import Footer from 'components/Footer';
 
 import LoginPage from 'containers/LoginPage/Loadable';
+import SignUpPage from 'containers/SignUpPage/Loadable';
 
 export default function App() {
   return (
@@ -42,6 +43,7 @@ export default function App() {
             <Route exact path="/" component={HomePage} />
             <Route path="/features" component={FeaturePage} />
 
+            <Route path="/signup" component={SignUpPage} />
             <Route path="/login" component={LoginPage} />
 
             <Route path="" component={NotFoundPage} />
